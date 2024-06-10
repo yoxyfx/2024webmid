@@ -50,9 +50,9 @@ body {
         background-position: center;
         height: 100vh;
         width: 100vw;
-        margin-left: 0px;
+        
         text-align: center;
-        z-index: 2;
+        z-index: 3;
     }
     /*글자 높이 조절*/
     .intro {
@@ -195,49 +195,68 @@ body {
         font-weight: bolder;
     }
     /*section: 챕터페이지*/
-    section.main {
-        width: auto;
-        height: 1080px;
+    .chapter {
+        width: 120%;
+        height: 120%;
+        display: inline-block;
+        cursor: move; /* Cursor style for draggable area */
+        transition: transform 15.0s ease; /* Slower transition for initial scaling */
+        z-index: 1; /* Lower z-index to stay behind other sections */
+        position: relative; /* Ensure z-index works */
+        overflow: hidden;
+    }
+    
+    .chapter img {
+        width: 100%; /* Adjusted to fit container width */
+        height: auto;
+        max-width: 1920px; /* Limit maximum width */
+        margin-left: -5%;
+        overflow: hidden;
+        transition: transform 6.0s ease; /* Regular transition for scaling */
+    }
+    
+    .chapter.hovered img {
+        transform: scale(1.8); /* Scale up when hovered */
+        transition: transform 6.0s ease; /* Even slower transition for scaling up */
+    }
+    
+    .section.main {
+        width: 110%;
+        height: 110%;
         background-image: url('img/mainbackground.gif');
         background-repeat: no-repeat;
         background-size: cover;
-        background-attachment: fixed;
         background-position: center;
-        background-attachment: fixed;
-        padding: 50px 0;
-        z-index: -1;
+        z-index: -1; /* Lower z-index to stay behind other sections */
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 6.0s ease; /* Smooth transition for movement */
+        opacity: 1; /* Initially visible */
+        pointer-events: auto; /* Enable interaction */
     }
-    #draggable {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        background-position: center;
-        position: relative; /* Allow positioning with top/left */
-        border: 2px solid #aaa;
-        transition: transform 0.2s ease-in-out; /* Apply transition effect */
-        cursor: move; /* Change cursor to indicate draggable element */
-        z-index: 1;
+    
+    .section.main.hovered {
+        transform: scale(1.2); /* Scale up when hovered */
+        opacity: 0; /* Hide when hovered */
+        pointer-events: none; /* Disable interaction */
     }
-
-    #draggable img {
-        display: block;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        z-index: -1;
-    }
+    
+   
     /*시놉시스*/ 
     section.timeline {
+        margin-top: -20px;
         width: auto;
-        height: 3800px;
+        height: 3800px; /* Adjust height as needed */
         background-image: url('img/bgorange.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
         background-position: center;
+        overflow: hidden;
         color: #333; /* Dark grey text */
         padding: 50px 0;
-        z-index: 1;
+        z-index: 0; /* Lower z-index than .section.main when scaled up */
     }
     .timeline ul {
         background-image: url('img/bgorange.png');

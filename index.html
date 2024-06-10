@@ -79,9 +79,14 @@
         </ul>
     </nav>
 <!--chapter 나중에 3d로 바꿔-->
+
     <section id="main" class="main">
-      
-      </section>
+        <div class="chapter">
+            <img src="img/mainbackground.gif">
+        </div>
+    </section>
+
+   
 <!--시놉시스-->
 <section id="timeline" class="timeline">
     <ul>
@@ -295,6 +300,8 @@
     <script src="https://unpkg.com/gsap/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
       <script src="script.js"></script>
       <script>
          /* TIMELINE */
@@ -333,7 +340,85 @@
 
 
 
-   
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+<script>
+    $( () => {
+        let isDragging = false;
+
+        // Initialize draggable on section.main
+        $( ".chapter" ).draggable({
+            axis: "x", // Only drag horizontally
+            containment: "parent",
+            cursor: "move",
+            start: function() {
+                isDragging = true;
+                $( this ).removeClass('hovered'); // Remove hover effect when dragging starts
+            },
+            stop: function() {
+                isDragging = false;
+                if ($( this ).hasClass('hovered')) {
+                    $( this ).removeClass('hovered'); // Ensure hover effect is removed if it persists after dragging
+                }
+            }
+        });
+
+        // Hover effect handling
+        $( ".chapter" ).hover(
+            function() {
+                if (!isDragging) {
+                    $( this ).addClass('hovered'); // Add class for hover effect if not dragging
+                }
+            },
+            function() {
+                if (!isDragging) {
+                    $( this ).removeClass('hovered'); // Remove class if not dragging
+                }
+            }
+        );
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+    // Function to check if an element is in viewport
+    function isElementInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Function to play or pause gif based on visibility
+    function toggleGifPlay() {
+        var gif = $(".chapter img")[0]; // Selecting the first img element within .chapter
+        if (isElementInViewport(gif)) {
+            var isHovered = $(".chapter").hasClass('hovered');
+            if (!isHovered) {
+                $(".chapter").addClass('hovered');
+                gif.src = gif.src; // Resetting gif by changing its src
+            }
+        } else {
+            $(".chapter").removeClass('hovered');
+        }
+    }
+
+    // Initial check on page load
+    toggleGifPlay();
+
+    // Check on scroll
+    $(window).scroll(function() {
+        toggleGifPlay();
+    });
+});
+
+</script>
+
        <script>
             /* SCROLL */
             $(document).ready(function(){
